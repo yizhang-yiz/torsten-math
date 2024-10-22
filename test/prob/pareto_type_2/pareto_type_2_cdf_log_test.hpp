@@ -1,6 +1,6 @@
 // Arguments: Doubles, Doubles, Doubles, Doubles
-#include <stan/math/prim.hpp>
-
+#include <stan/math/prim/prob/pareto_type_2_cdf_log.hpp>
+#include <stan/math/prim/fun/log1m.hpp>
 using stan::math::var;
 using std::numeric_limits;
 using std::vector;
@@ -64,8 +64,6 @@ class AgradCdfLogParetoType2 : public AgradCdfLogTest {
   stan::return_type_t<T_y, T_loc, T_scale, T_shape> cdf_log_function(
       const T_y& y, const T_loc& mu, const T_scale& lambda,
       const T_shape& alpha, const T4&, const T5&) {
-    using stan::math::log1m;
-    using std::pow;
-    return log1m(pow(1.0 + (y - mu) / lambda, -alpha));
+    return stan::math::log1m(stan::math::pow(1.0 + (y - mu) / lambda, -alpha));
   }
 };

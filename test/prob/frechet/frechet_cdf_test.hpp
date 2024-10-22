@@ -1,5 +1,7 @@
 // Arguments: Doubles, Doubles, Doubles
-#include <stan/math/prim.hpp>
+#include <stan/math/prim/prob/frechet_cdf.hpp>
+#include <stan/math/prim/fun/exp.hpp>
+#include <stan/math/prim/fun/pow.hpp>
 
 using stan::math::var;
 using std::numeric_limits;
@@ -75,8 +77,8 @@ class AgradCdfFrechet : public AgradCdfTest {
                                                           const T_scale& sigma,
                                                           const T3&, const T4&,
                                                           const T5&) {
-    using std::log;
-    using std::pow;
+    using stan::math::log;
+    using stan::math::pow;
     return exp(-pow(sigma / y, alpha));
   }
 };

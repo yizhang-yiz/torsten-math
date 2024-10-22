@@ -7,6 +7,8 @@
 #include <stan/math/prim/fun/acosh.hpp>
 #include <stan/math/prim/fun/add.hpp>
 #include <stan/math/prim/fun/add_diag.hpp>
+#include <stan/math/prim/fun/all.hpp>
+#include <stan/math/prim/fun/any.hpp>
 #include <stan/math/prim/fun/append_array.hpp>
 #include <stan/math/prim/fun/append_col.hpp>
 #include <stan/math/prim/fun/append_row.hpp>
@@ -22,6 +24,7 @@
 #include <stan/math/prim/fun/asinh.hpp>
 #include <stan/math/prim/fun/assign.hpp>
 #include <stan/math/prim/fun/atan.hpp>
+#include <stan/math/prim/fun/atan2.hpp>
 #include <stan/math/prim/fun/atanh.hpp>
 #include <stan/math/prim/fun/autocorrelation.hpp>
 #include <stan/math/prim/fun/autocovariance.hpp>
@@ -45,6 +48,7 @@
 #include <stan/math/prim/fun/cols.hpp>
 #include <stan/math/prim/fun/columns_dot_product.hpp>
 #include <stan/math/prim/fun/columns_dot_self.hpp>
+#include <stan/math/prim/fun/complex_schur_decompose.hpp>
 #include <stan/math/prim/fun/conj.hpp>
 #include <stan/math/prim/fun/constants.hpp>
 #include <stan/math/prim/fun/copysign.hpp>
@@ -60,6 +64,7 @@
 #include <stan/math/prim/fun/cov_matrix_free.hpp>
 #include <stan/math/prim/fun/cov_matrix_free_lkj.hpp>
 #include <stan/math/prim/fun/crossprod.hpp>
+#include <stan/math/prim/fun/csr_extract.hpp>
 #include <stan/math/prim/fun/csr_extract_u.hpp>
 #include <stan/math/prim/fun/csr_extract_v.hpp>
 #include <stan/math/prim/fun/csr_extract_w.hpp>
@@ -80,6 +85,8 @@
 #include <stan/math/prim/fun/dot_product.hpp>
 #include <stan/math/prim/fun/dot_self.hpp>
 #include <stan/math/prim/fun/eigen_comparisons.hpp>
+#include <stan/math/prim/fun/eigendecompose.hpp>
+#include <stan/math/prim/fun/eigendecompose_sym.hpp>
 #include <stan/math/prim/fun/eigenvalues.hpp>
 #include <stan/math/prim/fun/eigenvalues_sym.hpp>
 #include <stan/math/prim/fun/eigenvectors.hpp>
@@ -92,12 +99,12 @@
 #include <stan/math/prim/fun/exp.hpp>
 #include <stan/math/prim/fun/exp2.hpp>
 #include <stan/math/prim/fun/expm1.hpp>
-#include <stan/math/prim/fun/F32.hpp>
 #include <stan/math/prim/fun/fabs.hpp>
 #include <stan/math/prim/fun/factor_U.hpp>
 #include <stan/math/prim/fun/factor_cov_matrix.hpp>
 #include <stan/math/prim/fun/falling_factorial.hpp>
 #include <stan/math/prim/fun/fdim.hpp>
+#include <stan/math/prim/fun/fft.hpp>
 #include <stan/math/prim/fun/fill.hpp>
 #include <stan/math/prim/fun/finite_diff_stepsize.hpp>
 #include <stan/math/prim/fun/floor.hpp>
@@ -111,7 +118,9 @@
 #include <stan/math/prim/fun/get.hpp>
 #include <stan/math/prim/fun/get_base1.hpp>
 #include <stan/math/prim/fun/get_base1_lhs.hpp>
+#include <stan/math/prim/fun/get_imag.hpp>
 #include <stan/math/prim/fun/get_lp.hpp>
+#include <stan/math/prim/fun/get_real.hpp>
 #include <stan/math/prim/fun/gp_dot_prod_cov.hpp>
 #include <stan/math/prim/fun/gp_exponential_cov.hpp>
 #include <stan/math/prim/fun/gp_matern32_cov.hpp>
@@ -120,10 +129,15 @@
 #include <stan/math/prim/fun/grad_2F1.hpp>
 #include <stan/math/prim/fun/grad_F32.hpp>
 #include <stan/math/prim/fun/grad_inc_beta.hpp>
+#include <stan/math/prim/fun/grad_pFq.hpp>
 #include <stan/math/prim/fun/grad_reg_inc_beta.hpp>
 #include <stan/math/prim/fun/grad_reg_inc_gamma.hpp>
 #include <stan/math/prim/fun/grad_reg_lower_inc_gamma.hpp>
 #include <stan/math/prim/fun/head.hpp>
+#include <stan/math/prim/fun/hypergeometric_2F1.hpp>
+#include <stan/math/prim/fun/hypergeometric_2F2.hpp>
+#include <stan/math/prim/fun/hypergeometric_3F2.hpp>
+#include <stan/math/prim/fun/hypergeometric_pFq.hpp>
 #include <stan/math/prim/fun/hypot.hpp>
 #include <stan/math/prim/fun/identity_constrain.hpp>
 #include <stan/math/prim/fun/identity_free.hpp>
@@ -137,7 +151,9 @@
 #include <stan/math/prim/fun/int_step.hpp>
 #include <stan/math/prim/fun/inv.hpp>
 #include <stan/math/prim/fun/inv_Phi.hpp>
+#include <stan/math/prim/fun/inv_inc_beta.hpp>
 #include <stan/math/prim/fun/inv_cloglog.hpp>
+#include <stan/math/prim/fun/inv_erfc.hpp>
 #include <stan/math/prim/fun/inv_logit.hpp>
 #include <stan/math/prim/fun/inv_sqrt.hpp>
 #include <stan/math/prim/fun/inv_square.hpp>
@@ -164,6 +180,7 @@
 #include <stan/math/prim/fun/linspaced_row_vector.hpp>
 #include <stan/math/prim/fun/linspaced_vector.hpp>
 #include <stan/math/prim/fun/lmgamma.hpp>
+#include <stan/math/prim/fun/lmultiply.hpp>
 #include <stan/math/prim/fun/log.hpp>
 #include <stan/math/prim/fun/logb.hpp>
 #include <stan/math/prim/fun/log10.hpp>
@@ -185,6 +202,7 @@
 #include <stan/math/prim/fun/log_rising_factorial.hpp>
 #include <stan/math/prim/fun/log_softmax.hpp>
 #include <stan/math/prim/fun/log_sum_exp.hpp>
+#include <stan/math/prim/fun/log_sum_exp_signed.hpp>
 #include <stan/math/prim/fun/logical_and.hpp>
 #include <stan/math/prim/fun/logical_eq.hpp>
 #include <stan/math/prim/fun/logical_gt.hpp>
@@ -224,6 +242,8 @@
 #include <stan/math/prim/fun/multiply_log.hpp>
 #include <stan/math/prim/fun/multiply_lower_tri_self_transpose.hpp>
 #include <stan/math/prim/fun/norm.hpp>
+#include <stan/math/prim/fun/norm1.hpp>
+#include <stan/math/prim/fun/norm2.hpp>
 #include <stan/math/prim/fun/num_elements.hpp>
 #include <stan/math/prim/fun/offset_multiplier_constrain.hpp>
 #include <stan/math/prim/fun/offset_multiplier_free.hpp>
@@ -257,8 +277,10 @@
 #include <stan/math/prim/fun/promote_scalar.hpp>
 #include <stan/math/prim/fun/pseudo_eigenvalues.hpp>
 #include <stan/math/prim/fun/pseudo_eigenvectors.hpp>
+#include <stan/math/prim/fun/qr.hpp>
 #include <stan/math/prim/fun/qr_Q.hpp>
 #include <stan/math/prim/fun/qr_R.hpp>
+#include <stan/math/prim/fun/qr_thin.hpp>
 #include <stan/math/prim/fun/qr_thin_Q.hpp>
 #include <stan/math/prim/fun/qr_thin_R.hpp>
 #include <stan/math/prim/fun/quad_form.hpp>
@@ -289,6 +311,7 @@
 #include <stan/math/prim/fun/scaled_add.hpp>
 #include <stan/math/prim/fun/sd.hpp>
 #include <stan/math/prim/fun/segment.hpp>
+#include <stan/math/prim/fun/select.hpp>
 #include <stan/math/prim/fun/sign.hpp>
 #include <stan/math/prim/fun/signbit.hpp>
 #include <stan/math/prim/fun/simplex_constrain.hpp>
@@ -314,6 +337,7 @@
 #include <stan/math/prim/fun/sub_row.hpp>
 #include <stan/math/prim/fun/subtract.hpp>
 #include <stan/math/prim/fun/sum.hpp>
+#include <stan/math/prim/fun/svd.hpp>
 #include <stan/math/prim/fun/svd_U.hpp>
 #include <stan/math/prim/fun/svd_V.hpp>
 #include <stan/math/prim/fun/symmetrize_from_lower_tri.hpp>
@@ -325,6 +349,8 @@
 #include <stan/math/prim/fun/tgamma.hpp>
 #include <stan/math/prim/fun/to_array_1d.hpp>
 #include <stan/math/prim/fun/to_array_2d.hpp>
+#include <stan/math/prim/fun/to_complex.hpp>
+#include <stan/math/prim/fun/to_int.hpp>
 #include <stan/math/prim/fun/to_matrix.hpp>
 #include <stan/math/prim/fun/to_ref.hpp>
 #include <stan/math/prim/fun/to_row_vector.hpp>

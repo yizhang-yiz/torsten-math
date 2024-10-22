@@ -47,7 +47,7 @@ namespace math {
  */
 inline double inv_cloglog(double x) {
   using std::exp;
-  return 1 - exp(-exp(x));
+  return 1. - exp(-exp(x));
 }
 
 /**
@@ -59,7 +59,7 @@ inline double inv_cloglog(double x) {
  */
 struct inv_cloglog_fun {
   template <typename T>
-  static inline T fun(const T& x) {
+  static inline auto fun(const T& x) {
     return inv_cloglog(x);
   }
 };
@@ -73,6 +73,7 @@ struct inv_cloglog_fun {
  */
 template <typename Container,
           require_not_container_st<std::is_arithmetic, Container>* = nullptr,
+          require_not_var_matrix_t<Container>* = nullptr,
           require_all_not_nonscalar_prim_or_rev_kernel_expression_t<
               Container>* = nullptr>
 inline auto inv_cloglog(const Container& x) {

@@ -22,7 +22,7 @@ namespace math {
  */
 struct cos_fun {
   template <typename T>
-  static inline T fun(const T& x) {
+  static inline auto fun(const T& x) {
     using std::cos;
     return cos(x);
   }
@@ -57,7 +57,7 @@ template <typename Container,
           require_container_st<std::is_arithmetic, Container>* = nullptr>
 inline auto cos(const Container& x) {
   return apply_vector_unary<Container>::apply(
-      x, [](const auto& v) { return v.array().cos(); });
+      x, [&](const auto& v) { return v.array().cos(); });
 }
 
 namespace internal {

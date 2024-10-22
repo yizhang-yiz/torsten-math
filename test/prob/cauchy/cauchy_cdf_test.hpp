@@ -1,5 +1,7 @@
 // Arguments: Doubles, Doubles, Doubles
-#include <stan/math/prim.hpp>
+#include <stan/math/prim/prob/cauchy_cdf.hpp>
+#include <stan/math/prim/fun/atan2.hpp>
+#include <stan/math/prim/fun/constants.hpp>
 
 using stan::math::var;
 using std::numeric_limits;
@@ -72,8 +74,8 @@ class AgradCdfCauchy : public AgradCdfTest {
                                                         const T_scale& sigma,
                                                         const T3&, const T4&,
                                                         const T5&) {
+    using stan::math::atan2;
     using stan::math::pi;
-    using std::atan2;
     return atan2(y - mu, sigma) / pi() + 0.5;
   }
 };

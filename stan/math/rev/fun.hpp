@@ -3,17 +3,15 @@
 
 #include <stan/math/prim/fun/Eigen.hpp>
 
-#include <stan/math/prim/err.hpp>
-#include <stan/math/prim/fun.hpp>
-#include <stan/math/prim/functor.hpp>
-#include <stan/math/prim/meta.hpp>
-
 #include <stan/math/rev/fun/LDLT_factor.hpp>
 #include <stan/math/rev/fun/Phi.hpp>
 #include <stan/math/rev/fun/Phi_approx.hpp>
 #include <stan/math/rev/fun/abs.hpp>
+#include <stan/math/rev/fun/accumulator.hpp>
 #include <stan/math/rev/fun/acos.hpp>
 #include <stan/math/rev/fun/acosh.hpp>
+#include <stan/math/rev/fun/append_col.hpp>
+#include <stan/math/rev/fun/append_row.hpp>
 #include <stan/math/rev/fun/as_bool.hpp>
 #include <stan/math/rev/fun/as_array_or_scalar.hpp>
 #include <stan/math/rev/fun/as_column_vector_or_scalar.hpp>
@@ -32,6 +30,7 @@
 #include <stan/math/rev/fun/cholesky_decompose.hpp>
 #include <stan/math/rev/fun/cholesky_corr_constrain.hpp>
 #include <stan/math/rev/fun/cholesky_factor_constrain.hpp>
+#include <stan/math/rev/fun/cumulative_sum.hpp>
 #include <stan/math/rev/fun/columns_dot_product.hpp>
 #include <stan/math/rev/fun/columns_dot_self.hpp>
 #include <stan/math/rev/fun/conj.hpp>
@@ -50,6 +49,7 @@
 #include <stan/math/rev/fun/divide.hpp>
 #include <stan/math/rev/fun/dot_product.hpp>
 #include <stan/math/rev/fun/dot_self.hpp>
+#include <stan/math/rev/fun/eigendecompose_sym.hpp>
 #include <stan/math/rev/fun/eigenvalues_sym.hpp>
 #include <stan/math/rev/fun/eigenvectors_sym.hpp>
 #include <stan/math/rev/fun/elt_divide.hpp>
@@ -62,6 +62,7 @@
 #include <stan/math/rev/fun/fabs.hpp>
 #include <stan/math/rev/fun/falling_factorial.hpp>
 #include <stan/math/rev/fun/fdim.hpp>
+#include <stan/math/rev/fun/fft.hpp>
 #include <stan/math/rev/fun/fill.hpp>
 #include <stan/math/rev/fun/floor.hpp>
 #include <stan/math/rev/fun/fma.hpp>
@@ -75,16 +76,20 @@
 #include <stan/math/rev/fun/gp_periodic_cov.hpp>
 #include <stan/math/rev/fun/grad.hpp>
 #include <stan/math/rev/fun/grad_inc_beta.hpp>
+#include <stan/math/rev/fun/hypergeometric_2F1.hpp>
+#include <stan/math/rev/fun/hypergeometric_pFq.hpp>
 #include <stan/math/rev/fun/hypot.hpp>
 #include <stan/math/rev/fun/identity_constrain.hpp>
 #include <stan/math/rev/fun/identity_free.hpp>
 #include <stan/math/rev/fun/if_else.hpp>
 #include <stan/math/rev/fun/inc_beta.hpp>
+#include <stan/math/rev/fun/inv_inc_beta.hpp>
 #include <stan/math/rev/fun/initialize_fill.hpp>
 #include <stan/math/rev/fun/initialize_variable.hpp>
 #include <stan/math/rev/fun/inv.hpp>
 #include <stan/math/rev/fun/inv_Phi.hpp>
 #include <stan/math/rev/fun/inv_cloglog.hpp>
+#include <stan/math/rev/fun/inv_erfc.hpp>
 #include <stan/math/rev/fun/inv_logit.hpp>
 #include <stan/math/rev/fun/inv_sqrt.hpp>
 #include <stan/math/rev/fun/inv_square.hpp>
@@ -98,6 +103,7 @@
 #include <stan/math/rev/fun/ldexp.hpp>
 #include <stan/math/rev/fun/lgamma.hpp>
 #include <stan/math/rev/fun/lmgamma.hpp>
+#include <stan/math/rev/fun/lmultiply.hpp>
 #include <stan/math/rev/fun/log.hpp>
 #include <stan/math/rev/fun/log10.hpp>
 #include <stan/math/rev/fun/log1m.hpp>
@@ -131,6 +137,8 @@
 #include <stan/math/rev/fun/multiply_log.hpp>
 #include <stan/math/rev/fun/multiply_lower_tri_self_transpose.hpp>
 #include <stan/math/rev/fun/norm.hpp>
+#include <stan/math/rev/fun/norm1.hpp>
+#include <stan/math/rev/fun/norm2.hpp>
 #include <stan/math/rev/fun/ordered_constrain.hpp>
 #include <stan/math/rev/fun/owens_t.hpp>
 #include <stan/math/rev/fun/polar.hpp>
@@ -145,6 +153,8 @@
 #include <stan/math/rev/fun/read_cov_L.hpp>
 #include <stan/math/rev/fun/read_cov_matrix.hpp>
 #include <stan/math/rev/fun/rep_matrix.hpp>
+#include <stan/math/rev/fun/rep_row_vector.hpp>
+#include <stan/math/rev/fun/rep_vector.hpp>
 #include <stan/math/rev/fun/rising_factorial.hpp>
 #include <stan/math/rev/fun/round.hpp>
 #include <stan/math/rev/fun/rows_dot_product.hpp>
@@ -153,6 +163,7 @@
 #include <stan/math/rev/fun/simplex_constrain.hpp>
 #include <stan/math/rev/fun/sin.hpp>
 #include <stan/math/rev/fun/singular_values.hpp>
+#include <stan/math/rev/fun/svd.hpp>
 #include <stan/math/rev/fun/svd_U.hpp>
 #include <stan/math/rev/fun/svd_V.hpp>
 #include <stan/math/rev/fun/sinh.hpp>
@@ -170,6 +181,7 @@
 #include <stan/math/rev/fun/to_var.hpp>
 #include <stan/math/rev/fun/to_arena.hpp>
 #include <stan/math/rev/fun/to_var_value.hpp>
+#include <stan/math/rev/fun/to_vector.hpp>
 #include <stan/math/rev/fun/trace.hpp>
 #include <stan/math/rev/fun/trace_gen_inv_quad_form_ldlt.hpp>
 #include <stan/math/rev/fun/trace_gen_quad_form.hpp>
@@ -182,5 +194,10 @@
 #include <stan/math/rev/fun/value_of.hpp>
 #include <stan/math/rev/fun/value_of_rec.hpp>
 #include <stan/math/rev/fun/variance.hpp>
+
+#include <stan/math/prim/err.hpp>
+#include <stan/math/prim/fun.hpp>
+#include <stan/math/prim/functor.hpp>
+#include <stan/math/prim/meta.hpp>
 
 #endif

@@ -68,7 +68,7 @@ struct logit_fun {
    * @return log odds of the argument
    */
   template <typename T>
-  static inline T fun(const T& x) {
+  static inline auto fun(const T& x) {
     return logit(x);
   }
 };
@@ -86,6 +86,7 @@ struct logit_fun {
 template <
     typename Container,
     require_not_container_st<std::is_arithmetic, Container>* = nullptr,
+    require_not_var_matrix_t<Container>* = nullptr,
     require_not_nonscalar_prim_or_rev_kernel_expression_t<Container>* = nullptr>
 inline auto logit(const Container& x) {
   return apply_scalar_unary<logit_fun, Container>::apply(x);

@@ -1,5 +1,8 @@
 // Arguments: Doubles, Doubles, Doubles
-#include <stan/math/prim.hpp>
+#include <stan/math/prim/prob/weibull_log.hpp>
+#include <stan/math/prim/fun/log.hpp>
+#include <stan/math/prim/fun/pow.hpp>
+#include <stan/math/prim/fun/multiply_log.hpp>
 
 using stan::math::var;
 using std::numeric_limits;
@@ -73,9 +76,9 @@ class AgradDistributionsWeibull : public AgradDistributionTest {
   stan::return_type_t<T_y, T_shape, T_scale> log_prob_function(
       const T_y& y, const T_shape& alpha, const T_scale& sigma, const T3&,
       const T4&, const T5&) {
+    using stan::math::log;
     using stan::math::multiply_log;
-    using std::log;
-    using std::pow;
+    using stan::math::pow;
 
     return log(alpha) + multiply_log(alpha - 1.0, y)
            - multiply_log(alpha, sigma) - pow(y / sigma, alpha);

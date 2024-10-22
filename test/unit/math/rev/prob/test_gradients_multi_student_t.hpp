@@ -4,24 +4,24 @@
 #include <vector>
 #include <iomanip>
 #include <stdexcept>
-#include <test/unit/math/util.hpp>
+#include <stan/math.hpp>
 
 template <typename F, typename T_y, typename T_mu, typename T_sigma,
           typename T_nu>
-std::vector<double> finite_diffs_multi_normal(
+std::vector<double> finite_diffs_multi_normal3(
     const F& fun, const std::vector<T_y>& vec_y,
     const std::vector<T_mu>& vec_mu, const std::vector<T_sigma>& vec_sigma,
     const T_nu& nu, double epsilon = 1e-6) {
   std::vector<double> diffs;
   diffs.reserve(vec_y.size() + vec_mu.size() + vec_sigma.size());
 
-  std::vector<double> vec_y_plus = vdouble_from_vvar(vec_y);
+  std::vector<double> vec_y_plus = stan::math::value_of(vec_y);
   std::vector<double> vec_y_minus = vec_y_plus;
-  std::vector<double> vec_mu_plus = vdouble_from_vvar(vec_mu);
+  std::vector<double> vec_mu_plus = stan::math::value_of(vec_mu);
   std::vector<double> vec_mu_minus = vec_mu_plus;
-  std::vector<double> vec_sigma_plus = vdouble_from_vvar(vec_sigma);
+  std::vector<double> vec_sigma_plus = stan::math::value_of(vec_sigma);
   std::vector<double> vec_sigma_minus = vec_sigma_plus;
-  double nu_plus = double_from_var(nu);
+  double nu_plus = stan::math::value_of(nu);
   double nu_minus = nu_plus;
 
   if (!stan::is_constant_all<T_y>::value) {
@@ -79,11 +79,11 @@ std::vector<double> finite_diffs_multi_normal(
 
 template <typename F, typename T_y, typename T_mu, typename T_sigma,
           typename T_nu>
-std::vector<double> grad_multi_normal(const F& fun,
-                                      const std::vector<T_y>& vec_y,
-                                      const std::vector<T_mu>& vec_mu,
-                                      const std::vector<T_sigma>& vec_sigma,
-                                      const T_nu& nu) {
+std::vector<double> grad_multi_normal3(const F& fun,
+                                       const std::vector<T_y>& vec_y,
+                                       const std::vector<T_mu>& vec_mu,
+                                       const std::vector<T_sigma>& vec_sigma,
+                                       const T_nu& nu) {
   stan::math::var fx = fun(vec_y, vec_mu, vec_sigma, nu);
   std::vector<double> grad;
   std::vector<stan::math::var> vec_vars;
@@ -114,9 +114,9 @@ void test_grad_multi_student_t(const F& fun, const std::vector<T_y>& vec_y,
                                const T_nu& nu) {
   using std::fabs;
   std::vector<double> diffs_finite
-      = finite_diffs_multi_normal(fun, vec_y, vec_mu, vec_sigma, nu);
+      = finite_diffs_multi_normal3(fun, vec_y, vec_mu, vec_sigma, nu);
   std::vector<double> diffs_var
-      = grad_multi_normal(fun, vec_y, vec_mu, vec_sigma, nu);
+      = grad_multi_normal3(fun, vec_y, vec_mu, vec_sigma, nu);
   EXPECT_EQ(diffs_finite.size(), diffs_var.size());
   for (size_t i = 0; i < diffs_finite.size(); ++i) {
     double tolerance

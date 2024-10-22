@@ -1,9 +1,10 @@
 // Arguments: Doubles, Doubles, Doubles
-#include <stan/math/prim.hpp>
+#include <stan/math/prim/prob/loglogistic_cdf.hpp>
+#include <stan/math/prim/fun/pow.hpp>
 
+using stan::math::pow;
 using stan::math::var;
 using std::numeric_limits;
-using std::pow;
 using std::vector;
 
 class AgradCdfLogistic : public AgradCdfTest {

@@ -65,7 +65,7 @@ struct log1m_inv_logit_fun {
    * @return natural log of one minus inverse logit of argument
    */
   template <typename T>
-  static inline T fun(const T& x) {
+  static inline auto fun(const T& x) {
     return log1m_inv_logit(x);
   }
 };
@@ -80,7 +80,7 @@ struct log1m_inv_logit_fun {
  * @param x container
  * @return Elementwise log1m_inv_logit of members of container.
  */
-template <typename T,
+template <typename T, require_not_var_matrix_t<T>* = nullptr,
           require_not_nonscalar_prim_or_rev_kernel_expression_t<T>* = nullptr>
 inline typename apply_scalar_unary<log1m_inv_logit_fun, T>::return_t
 log1m_inv_logit(const T& x) {
